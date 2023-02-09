@@ -2,8 +2,7 @@
 
 struct Circle
 {
-	int x;
-	int y;
+	SDL_Point center;
 	int radius;
 };
 
