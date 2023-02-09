@@ -10,8 +10,6 @@
 const int SCREEN_WIDTH = 1000;
 const int SCREEN_HEIGHT = 600;
 
-void DrawCircle(SDL_Renderer* renderer, int32_t centreX, int32_t centreY, int32_t radius);
-
 int main()
 {
 	SDL_Window* window = nullptr;
@@ -20,9 +18,6 @@ int main()
 	SDL_Init(SDL_INIT_EVERYTHING);
 	bool running = true;
 	SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, &window, &renderer);
-
-
-
 
 	//Initialize mouse position and radius setting.
 	SDL_Point mousePos = { SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
@@ -59,7 +54,7 @@ int main()
 			}
 			else if (e.type == SDL_KEYUP)
 			{
-				
+
 			}
 			else if (e.type == SDL_MOUSEMOTION)
 			{
@@ -92,6 +87,7 @@ int main()
 			}
 		}
 		
+		//Draw mouse circle
 		circles[0] = { mousePos.x, mousePos.y, radius };
 
 		for (size_t i = 0; i < circles.size(); i++)
