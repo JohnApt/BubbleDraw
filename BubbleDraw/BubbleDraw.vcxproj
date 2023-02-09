@@ -132,6 +132,9 @@
   <ItemGroup>
     <ClCompile Include="BubbleDraw.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="primitiveStructs.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
