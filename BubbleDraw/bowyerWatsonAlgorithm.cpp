@@ -33,9 +33,9 @@ bool isWithinCircumcircle(SDL_Point &point, Triangle &triangle)
 	else return true;
 }
 
-bool isUniqueEdge(Line &edge, std::vector<Triangle> &badTriangles, Triangle thisTriangle)
+bool isUniqueEdge(Line &edge, std::vector<Triangle> &badTriangles, Triangle &thisTriangle)
 {
-	for (Triangle triangle : badTriangles)
+	for (Triangle &triangle : badTriangles)
 	{
 		if (triangle == thisTriangle)
 			continue;
@@ -61,7 +61,7 @@ std::vector<Triangle> BowyerWatsonAlgorithm(std::vector<SDL_Point> points)
 	std::vector<Triangle> triangulation = { superTriangle };
 
 	//Add all the points one at a time to the triangulation
-	for (SDL_Point point : points)
+	for (SDL_Point &point : points)
 	{
 		std::vector<Triangle> badTriangles;
 		for (Triangle &triangle : triangulation)
@@ -86,7 +86,7 @@ std::vector<Triangle> BowyerWatsonAlgorithm(std::vector<SDL_Point> points)
 				polygon.push_back(edge3);
 		}
 		//Remove bad triangles from triangulation
-		for (Triangle triangle : badTriangles)
+		for (Triangle &triangle : badTriangles)
 		{
 			for (int i = 0; i < triangulation.size(); i++)
 			{
@@ -97,7 +97,7 @@ std::vector<Triangle> BowyerWatsonAlgorithm(std::vector<SDL_Point> points)
 				}
 			}
 		}
-		for (Line edge : polygon)
+		for (Line &edge : polygon)
 		{
 			Triangle newTriangle = { edge.p1, edge.p2, point };
 			triangulation.push_back(newTriangle);
