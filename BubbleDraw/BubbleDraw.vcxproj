@@ -130,12 +130,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bowyerWatsonAlgorithm.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="drawCircle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bowyerWatsonAlgorithm.h" />
     <ClInclude Include="drawCircle.h" />
     <ClInclude Include="primitiveStructs.h" />
+    <ClInclude Include="SDL_Util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

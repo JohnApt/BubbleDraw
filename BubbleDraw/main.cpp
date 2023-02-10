@@ -2,26 +2,36 @@
 #include <SDL.h>
 #include <stdio.h>
 #include <vector>
+#include "SDL_Util.h"
 #include "primitiveStructs.h"
 #include "drawCircle.h"
+#include "bowyerWatsonAlgorithm.h"
 #undef main
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1000;
-const int SCREEN_HEIGHT = 600;
+extern const int SCREEN_WIDTH = 1000;
+extern const int SCREEN_HEIGHT = 600;
+
+
+
+//Initialize mouse position and radius setting.
+SDL_Point mousePos = { SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
+int radiusSetting = 100;
+
+SDL_Event e;
+bool running = true;
 
 int main()
 {
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
-	SDL_Event e;
+	
 	SDL_Init(SDL_INIT_EVERYTHING);
-	bool running = true;
+	
 	SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, &window, &renderer);
 
-	//Initialize mouse position and radius setting.
-	SDL_Point mousePos = { SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
-	int radius = 100;
+	
+
 
 	//Initialize circle vector. The 0 index circle is reserved for the mouse circle.
 	std::vector<Circle> circles;
@@ -36,7 +46,7 @@ int main()
 		//Set draw color to white
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		
-		//TODO: Refactor into a new file.
+		//TODO: Refactor into a new file
 		while (SDL_PollEvent(&e))
 		{
 			if (e.type == SDL_QUIT)
@@ -49,6 +59,10 @@ int main()
 				{
 				case SDLK_ESCAPE:
 					running = false;
+					break;
+				case SDLK_c:
+					circles.clear();
+					circles.push_back({ {0, 0}, 0 });
 					break;
 				}
 			}
@@ -64,21 +78,21 @@ int main()
 			{
 				if (e.wheel.y > 0)
 				{
-					radius += 10;
-					std::cout << "Radius: " << radius << std::endl;
+					radiusSetting += 10;
+					std::cout << "Radius: " << radiusSetting << std::endl;
 				}
 				else if (e.wheel.y < 0)
 				{
-					if (radius > 10)
-						radius -= 10;
-					std::cout << "Radius: " << radius << std::endl;
+					if (radiusSetting > 10)
+						radiusSetting -= 10;
+					std::cout << "Radius: " << radiusSetting << std::endl;
 				}
 			}
 			else if (e.type == SDL_MOUSEBUTTONDOWN)
 			{
 				if (e.button.button == SDL_BUTTON_LEFT)
 				{
-					circles.push_back({ mousePos.x, mousePos.y, radius });
+					circles.push_back({ mousePos.x, mousePos.y, radiusSetting });
 				}
 			}
 			else if (e.type == SDL_MOUSEBUTTONUP)
@@ -87,14 +101,27 @@ int main()
 			}
 		}
 		
-		//Draw mouse circle
-		circles[0] = { mousePos.x, mousePos.y, radius };
+		//Update mouse circle
+		circles[0] = { mousePos.x, mousePos.y, radiusSetting };
 
+		
+		std::vector<SDL_Point> circleCenters;
 		for (size_t i = 0; i < circles.size(); i++)
 		{
+			circleCenters.push_back(circles[i].center);
 			std::vector<SDL_Point> circleData = PixelizeCircle(circles[i].center, circles[i].radius);
 			SDL_RenderDrawPoints(renderer, circleData.data(), circleData.size());
 		}
+		
+		//Draw Delaunay Triangulation
+		std::vector<Triangle> delaunayTriangles = BowyerWatsonAlgorithm(circleCenters);
+		for (size_t i = 0; i < delaunayTriangles.size(); i++)
+		{
+			SDL_RenderDrawLine(renderer, delaunayTriangles[i].p1.x, delaunayTriangles[i].p1.y, delaunayTriangles[i].p2.x, delaunayTriangles[i].p2.y);
+			SDL_RenderDrawLine(renderer, delaunayTriangles[i].p2.x, delaunayTriangles[i].p2.y, delaunayTriangles[i].p3.x, delaunayTriangles[i].p3.y);
+			SDL_RenderDrawLine(renderer, delaunayTriangles[i].p3.x, delaunayTriangles[i].p3.y, delaunayTriangles[i].p1.x, delaunayTriangles[i].p1.y);
+		}
+
 		
 		SDL_RenderPresent(renderer);
 	}
