@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <stdio.h>
 #include <vector>
+#include <algorithm>
 #include "SDL_Util.h"
 #include "primitiveStructs.h"
 #include "drawCircle.h"
@@ -20,6 +21,9 @@ int radiusSetting = 100;
 
 SDL_Event e;
 bool running = true;
+
+
+Circle* findCircleWithCenter(SDL_Point& center, std::vector<Circle>& circles);
 
 int main()
 {
@@ -104,17 +108,51 @@ int main()
 		//Update mouse circle
 		circles[0] = { mousePos.x, mousePos.y, radiusSetting };
 
-		
+		//Generate list of circle centers
 		std::vector<SDL_Point> circleCenters;
 		for (size_t i = 0; i < circles.size(); i++)
 		{
 			circleCenters.push_back(circles[i].center);
+		}
+		//Generate Delaunay Triangulation
+		std::vector<Triangle> delaunayTriangles = BowyerWatsonAlgorithm(circleCenters);
+		
+		//Find circle adjacencies using triangulation
+		for (size_t i = 0; i < delaunayTriangles.size(); i++)
+		{
+			Circle* circle1 = findCircleWithCenter(delaunayTriangles[i].p1, circles);
+			Circle* circle2 = findCircleWithCenter(delaunayTriangles[i].p2, circles);
+			Circle* circle3 = findCircleWithCenter(delaunayTriangles[i].p3, circles);
+
+			if (circle1 != nullptr && circle2 != nullptr)
+			{
+				circle1->adjacentCircles.insert(circle2);
+				circle2->adjacentCircles.insert(circle1);
+			}
+			if (circle2 != nullptr && circle3 != nullptr)
+			{
+				circle2->adjacentCircles.insert(circle3);
+				circle3->adjacentCircles.insert(circle2);
+			}
+			if (circle3 != nullptr && circle1 != nullptr)
+			{
+				circle3->adjacentCircles.insert(circle1);
+				circle1->adjacentCircles.insert(circle3);
+			}
+		}
+		for (size_t i = 0; i < circles.size(); i++)
+		{
 			std::vector<SDL_Point> circleData = PixelizeCircle(circles[i].center, circles[i].radius);
 			SDL_RenderDrawPoints(renderer, circleData.data(), circleData.size());
 		}
+		//Clear adjacent circles
+		for (size_t i = 0; i < circles.size(); i++)
+		{
+			circles[i].adjacentCircles.clear();
+		}
+		
 		
 		//Draw Delaunay Triangulation
-		std::vector<Triangle> delaunayTriangles = BowyerWatsonAlgorithm(circleCenters);
 		for (size_t i = 0; i < delaunayTriangles.size(); i++)
 		{
 			SDL_RenderDrawLine(renderer, delaunayTriangles[i].p1.x, delaunayTriangles[i].p1.y, delaunayTriangles[i].p2.x, delaunayTriangles[i].p2.y);
@@ -125,4 +163,16 @@ int main()
 		
 		SDL_RenderPresent(renderer);
 	}
+}
+
+
+Circle* findCircleWithCenter(SDL_Point &center, std::vector<Circle> &circles)
+{
+	Circle* output = nullptr;
+	for (Circle circle : circles)
+	{
+		if (circle.center == center)
+			return output = &circle;
+	}
+	return output;
 }

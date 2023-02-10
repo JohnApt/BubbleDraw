@@ -1,9 +1,12 @@
 #pragma once
+#include <set>
 
 struct Circle
 {
 	SDL_Point center;
 	int radius;
+
+	std::set<Circle*> adjacentCircles;
 };
 
 struct Line
