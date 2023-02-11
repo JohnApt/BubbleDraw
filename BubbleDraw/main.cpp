@@ -147,6 +147,12 @@ int main()
 			SDL_RenderDrawPoints(renderer, circleData.data(), circleData.size());
 		}
 		
+		//Clear adjacent circle indices
+		for (size_t i = 0; i < circles.size(); i++)
+		{
+			circles[i].adjacentCircleIndices.clear();
+		}
+		
 		
 		//Draw Delaunay Triangulation
 		for (size_t i = 0; i < delaunayTriangles.size(); i++)
