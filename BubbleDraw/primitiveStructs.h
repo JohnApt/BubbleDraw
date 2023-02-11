@@ -6,7 +6,13 @@ struct Circle
 	SDL_Point center;
 	int radius;
 
-	std::set<Circle*> adjacentCircles;
+	std::set<int> adjacentCircleIndices;
+
+	double powerOfPoint(SDL_Point& point)
+	{
+		double distance = sqrt(pow(point.x - center.x, 2) + pow(point.y - center.y, 2));
+		return distance * distance - radius * radius;
+	}
 };
 
 struct Line

@@ -10,8 +10,8 @@
 #undef main
 
 //Screen dimension constants
-extern const int SCREEN_WIDTH = 1000;
-extern const int SCREEN_HEIGHT = 600;
+extern const int SCREEN_WIDTH = 1920;
+extern const int SCREEN_HEIGHT = 1080;
 
 
 
@@ -23,7 +23,7 @@ SDL_Event e;
 bool running = true;
 
 
-Circle* findCircleWithCenter(SDL_Point& center, std::vector<Circle>& circles);
+int findCircleIndexWithCenter(SDL_Point& center, std::vector<Circle> &circles);
 
 int main()
 {
@@ -120,35 +120,31 @@ int main()
 		//Find circle adjacencies using triangulation
 		for (size_t i = 0; i < delaunayTriangles.size(); i++)
 		{
-			Circle* circle1 = findCircleWithCenter(delaunayTriangles[i].p1, circles);
-			Circle* circle2 = findCircleWithCenter(delaunayTriangles[i].p2, circles);
-			Circle* circle3 = findCircleWithCenter(delaunayTriangles[i].p3, circles);
+			int circle1Index = findCircleIndexWithCenter(delaunayTriangles[i].p1, circles);
+			int circle2Index = findCircleIndexWithCenter(delaunayTriangles[i].p2, circles);
+			int circle3Index = findCircleIndexWithCenter(delaunayTriangles[i].p3, circles);
+			
+			if (circle1Index != -1 && circle2Index != -1)
+			{
+				circles[circle1Index].adjacentCircleIndices.insert(circle2Index);
+				circles[circle2Index].adjacentCircleIndices.insert(circle1Index);
+			}
+			if (circle2Index != -1 && circle3Index != -1)
+			{
+				circles[circle2Index].adjacentCircleIndices.insert(circle3Index);
+				circles[circle3Index].adjacentCircleIndices.insert(circle2Index);
+			}
+			if (circle1Index != -1 && circle3Index != -1)
+			{
+				circles[circle1Index].adjacentCircleIndices.insert(circle3Index);
+				circles[circle3Index].adjacentCircleIndices.insert(circle1Index);
+			}
+		}
 
-			if (circle1 != nullptr && circle2 != nullptr)
-			{
-				circle1->adjacentCircles.insert(circle2);
-				circle2->adjacentCircles.insert(circle1);
-			}
-			if (circle2 != nullptr && circle3 != nullptr)
-			{
-				circle2->adjacentCircles.insert(circle3);
-				circle3->adjacentCircles.insert(circle2);
-			}
-			if (circle3 != nullptr && circle1 != nullptr)
-			{
-				circle3->adjacentCircles.insert(circle1);
-				circle1->adjacentCircles.insert(circle3);
-			}
-		}
 		for (size_t i = 0; i < circles.size(); i++)
 		{
-			std::vector<SDL_Point> circleData = PixelizeCircle(circles[i].center, circles[i].radius);
+			std::vector<SDL_Point> circleData = PixelizeCircle(i, circles);
 			SDL_RenderDrawPoints(renderer, circleData.data(), circleData.size());
-		}
-		//Clear adjacent circles
-		for (size_t i = 0; i < circles.size(); i++)
-		{
-			circles[i].adjacentCircles.clear();
 		}
 		
 		
@@ -166,13 +162,14 @@ int main()
 }
 
 
-Circle* findCircleWithCenter(SDL_Point &center, std::vector<Circle> &circles)
+int findCircleIndexWithCenter(SDL_Point &center, std::vector<Circle> &circles)
 {
-	Circle* output = nullptr;
-	for (Circle circle : circles)
+	for (size_t i = 0; i < circles.size(); i++)
 	{
-		if (circle.center == center)
-			return output = &circle;
+		if (circles[i].center.x == center.x && circles[i].center.y == center.y)
+		{
+			return i;
+		}
 	}
-	return output;
+	return -1;
 }
