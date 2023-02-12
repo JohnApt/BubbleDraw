@@ -35,9 +35,6 @@ int main()
 	
 	SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, 0, &window, &renderer);
 
-	
-
-
 	//Initialize circle vector. The 0 index circle is reserved for the mouse circle.
 	std::vector<Circle> circles;
 	circles.push_back({ {0, 0}, 0 });
@@ -136,7 +133,6 @@ int main()
 			SDL_RenderDrawLine(renderer, delaunayTriangles[i].p3.x, delaunayTriangles[i].p3.y, delaunayTriangles[i].p1.x, delaunayTriangles[i].p1.y);
 		}
 
-		
 		SDL_RenderPresent(renderer);
 	}
 }
