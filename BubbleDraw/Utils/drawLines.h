@@ -3,4 +3,4 @@
 #include <SDL.h>
 #include "../Structs/primitiveStructs.h"
 
-std::vector<SDL_Point> PixelizeLines(std::vector<Triangle> triangles, std::vector<Circle> circles);
+void drawLines(std::vector<Triangle> triangles, std::vector<Circle> circles, SDL_Renderer* gRenderer);

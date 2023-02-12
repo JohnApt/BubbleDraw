@@ -6,6 +6,7 @@
 #include "Utils/SDL_Util.h"
 #include "Structs/primitiveStructs.h"
 #include "Utils/drawCircle.h"
+#include "Utils/drawLines.h"
 #include "AbstractAlgorithms/bowyerWatsonAlgorithm.h"
 #include "Utils/Utils.h"
 #undef main
@@ -118,6 +119,10 @@ int main()
 
 		//Generate circle adjacencies
 		generateCircleAdjacencies(circles, delaunayTriangles);
+		
+		//Draw lines
+		//drawLines(delaunayTriangles, circles, renderer);
+		
 
 		for (size_t i = 0; i < circles.size(); i++)
 		{

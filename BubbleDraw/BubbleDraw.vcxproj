@@ -132,8 +132,10 @@
   <ItemGroup>
     <ClCompile Include="AbstractAlgorithms\bowyerWatsonAlgorithm.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Structs\primitiveStructs.cpp" />
     <ClCompile Include="Utils\drawCircle.cpp" />
     <ClCompile Include="Utils\drawLines.cpp" />
+    <ClCompile Include="Utils\SDL_Util.cpp" />
     <ClCompile Include="Utils\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
