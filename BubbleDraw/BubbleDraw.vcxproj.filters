@@ -17,7 +17,7 @@
     <ClCompile Include="drawCircle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="bowyerWatsonAlgorithm.cpp">
+    <ClCompile Include="AbstractAlgorithms\bowyerWatsonAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -28,7 +28,7 @@
     <ClInclude Include="drawCircle.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="bowyerWatsonAlgorithm.h">
+    <ClInclude Include="AbstractAlgorithms\bowyerWatsonAlgorithm.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="SDL_Util.h">

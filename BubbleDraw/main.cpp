@@ -3,9 +3,9 @@
 #include <stdio.h>
 #include <vector>
 #include <algorithm>
-#include "SDL_Util.h"
-#include "primitiveStructs.h"
-#include "drawCircle.h"
+#include "Utils/SDL_Util.h"
+#include "Structs/primitiveStructs.h"
+#include "Utils/drawCircle.h"
 #include "bowyerWatsonAlgorithm.h"
 #undef main
 
