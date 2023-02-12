@@ -11,8 +11,8 @@ struct Circle
 
 	double powerOfPoint(SDL_Point& point)
 	{
-		double distance = sqrt(pow(point.x - center.x, 2) + pow(point.y - center.y, 2));
-		return distance * distance - radius * radius;
+		double distance2 = pow(point.x - center.x, 2) + pow(point.y - center.y, 2);
+		return distance2 - pow(radius, 2);
 	}
 };
 

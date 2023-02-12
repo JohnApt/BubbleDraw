@@ -133,12 +133,14 @@
     <ClCompile Include="AbstractAlgorithms\bowyerWatsonAlgorithm.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Utils\drawCircle.cpp" />
+    <ClCompile Include="Utils\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractAlgorithms\bowyerWatsonAlgorithm.h" />
     <ClInclude Include="Structs\primitiveStructs.h" />
     <ClInclude Include="Utils\drawCircle.h" />
     <ClInclude Include="Utils\SDL_Util.h" />
+    <ClInclude Include="Utils\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

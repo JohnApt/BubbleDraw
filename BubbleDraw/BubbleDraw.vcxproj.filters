@@ -20,6 +20,9 @@
     <ClCompile Include="Utils\drawCircle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Utils\Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractAlgorithms\bowyerWatsonAlgorithm.h">
@@ -28,5 +31,6 @@
     <ClInclude Include="Utils\SDL_Util.h" />
     <ClInclude Include="Utils\drawCircle.h" />
     <ClInclude Include="Structs\primitiveStructs.h" />
+    <ClInclude Include="Utils\Utils.h" />
   </ItemGroup>
 </Project>
