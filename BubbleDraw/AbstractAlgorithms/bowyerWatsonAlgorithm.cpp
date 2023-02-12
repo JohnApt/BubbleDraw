@@ -10,25 +10,9 @@ extern const int SCREEN_HEIGHT;
 
 bool isWithinCircumcircle(SDL_Point &point, Triangle &triangle)
 {
-	double x1 = triangle.p1.x;
-	double y1 = triangle.p1.y;
-	double x2 = triangle.p2.x;
-	double y2 = triangle.p2.y;
-	double x3 = triangle.p3.x;
-	double y3 = triangle.p3.y;
-	double a = sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-	double b = sqrt((x3 - x1) * (x3 - x1) + (y3 - y1) * (y3 - y1));
-	double c = sqrt((x3 - x2) * (x3 - x2) + (y3 - y2) * (y3 - y2));
-	double radius = (a * b * c) / (sqrt((a + b + c) * (b + c - a) * (c + a - b) * (a + b - c)));
-	double d = 2 * (x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2));
-
-	SDL_Point circumCenter;
-	circumCenter.x = ((x1 * x1 + y1 * y1) * (y2 - y3) + (x2 * x2 + y2 * y2) * (y3 - y1) + (x3 * x3 + y3 * y3) * (y1 - y2)) / d;
-	circumCenter.y = ((x1 * x1 + y1 * y1) * (x3 - x2) + (x2 * x2 + y2 * y2) * (x1 - x3) + (x3 * x3 + y3 * y3) * (x2 - x1)) / d;
-
-	double distance = sqrt((point.x - circumCenter.x) * (point.x - circumCenter.x) + (point.y - circumCenter.y) * (point.y - circumCenter.y));
+	double distance = sqrt((point.x - triangle.circumCenter.x) * (point.x - triangle.circumCenter.x) + (point.y - triangle.circumCenter.y) * (point.y - triangle.circumCenter.y));
 	
-	if (distance > radius)
+	if (distance > triangle.circumRadius)
 		return false;
 	else return true;
 }

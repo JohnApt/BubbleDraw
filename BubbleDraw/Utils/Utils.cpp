@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include "Utils.h"
 
-//
 int findCircleIndexWithCenter(SDL_Point& center, std::vector<Circle>& circles)
 {
 	for (size_t i = 0; i < circles.size(); i++)
@@ -17,7 +16,7 @@ int findCircleIndexWithCenter(SDL_Point& center, std::vector<Circle>& circles)
 	return -1;
 }
 
-//Find circle adjacencies using triangulation
+//Generate a list of adjacent circles for each circle
 void generateCircleAdjacencies(std::vector<Circle>& circles, std::vector<Triangle>& delaunayTriangles)
 {
 	for (size_t i = 0; i < delaunayTriangles.size(); i++)
