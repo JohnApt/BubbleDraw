@@ -1,13 +1,13 @@
 #pragma once
-#include <set>
 #include <SDL.h>
+#include <vector>
 
 struct Circle
 {
 	SDL_Point center;
 	int radius;
 
-	std::set<int> adjacentCircleIndices;
+	std::vector<int> adjacentCircleIndices;
 
 	double powerOfPoint(SDL_Point& point)
 	{

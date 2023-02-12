@@ -21,6 +21,9 @@ extern const int SCREEN_HEIGHT = 1080;
 SDL_Point mousePos = { SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
 int radiusSetting = 100;
 
+//Turn on Dalaunay triangulation
+bool triangulation = true;
+
 SDL_Event e;
 bool running = true;
 
@@ -114,29 +117,35 @@ int main()
 			circleCenters.push_back(circles[i].center);
 		}
 		
-		//Generate Delaunay Triangulation
-		std::vector<Triangle> delaunayTriangles = BowyerWatsonAlgorithm(circleCenters);
-
+		//Clear circle adjacencies
+		for (size_t i = 0; i < circles.size(); i++)
+		{
+			circles[i].adjacentCircleIndices.clear();
+		}
+		
 		//Generate circle adjacencies
-		generateCircleAdjacencies(circles, delaunayTriangles);
+		generateCircleAdjacencies(circles);
 		
-		//Draw lines
-		//drawLines(delaunayTriangles, circles, renderer);
-		
-
 		for (size_t i = 0; i < circles.size(); i++)
 		{
 			std::vector<SDL_Point> circleData = PixelizeCircle(i, circles);
 			SDL_RenderDrawPoints(renderer, circleData.data(), circleData.size());
 		}
 		
-		//Draw Delaunay Triangulation
-		for (size_t i = 0; i < delaunayTriangles.size(); i++)
+		if (triangulation && circles.size() > 2)
 		{
-			SDL_RenderDrawLine(renderer, delaunayTriangles[i].p1.x, delaunayTriangles[i].p1.y, delaunayTriangles[i].p2.x, delaunayTriangles[i].p2.y);
-			SDL_RenderDrawLine(renderer, delaunayTriangles[i].p2.x, delaunayTriangles[i].p2.y, delaunayTriangles[i].p3.x, delaunayTriangles[i].p3.y);
-			SDL_RenderDrawLine(renderer, delaunayTriangles[i].p3.x, delaunayTriangles[i].p3.y, delaunayTriangles[i].p1.x, delaunayTriangles[i].p1.y);
+			//Generate Delaunay Triangulation
+			std::vector<Triangle> delaunayTriangles = BowyerWatsonAlgorithm(circleCenters);
+
+			//Draw Delaunay Triangulation
+			for (size_t i = 0; i < delaunayTriangles.size(); i++)
+			{
+				SDL_RenderDrawLine(renderer, delaunayTriangles[i].p1.x, delaunayTriangles[i].p1.y, delaunayTriangles[i].p2.x, delaunayTriangles[i].p2.y);
+				SDL_RenderDrawLine(renderer, delaunayTriangles[i].p2.x, delaunayTriangles[i].p2.y, delaunayTriangles[i].p3.x, delaunayTriangles[i].p3.y);
+				SDL_RenderDrawLine(renderer, delaunayTriangles[i].p3.x, delaunayTriangles[i].p3.y, delaunayTriangles[i].p1.x, delaunayTriangles[i].p1.y);
+			}
 		}
+		
 		SDL_RenderPresent(renderer);
 	}
 }

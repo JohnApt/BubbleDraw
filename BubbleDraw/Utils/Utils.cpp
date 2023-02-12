@@ -17,30 +17,27 @@ int findCircleIndexWithCenter(SDL_Point& center, std::vector<Circle>& circles)
 }
 
 //Generate a list of adjacent circles for each circle
-void generateCircleAdjacencies(std::vector<Circle>& circles, std::vector<Triangle>& delaunayTriangles)
+void generateCircleAdjacencies(std::vector<Circle>& circles)
 {
-	for (size_t i = 0; i < delaunayTriangles.size(); i++)
+	for (size_t i = 0; i < circles.size(); i++)
 	{
-		int circle1Index = findCircleIndexWithCenter(delaunayTriangles[i].p1, circles);
-		int circle2Index = findCircleIndexWithCenter(delaunayTriangles[i].p2, circles);
-		int circle3Index = findCircleIndexWithCenter(delaunayTriangles[i].p3, circles);
-
-		if (circle1Index != -1 && circle2Index != -1)
+		for (size_t j = 0; j < circles.size(); j++)
 		{
-			circles[circle1Index].adjacentCircleIndices.insert(circle2Index);
-			circles[circle2Index].adjacentCircleIndices.insert(circle1Index);
-		}
-		if (circle2Index != -1 && circle3Index != -1)
-		{
-			circles[circle2Index].adjacentCircleIndices.insert(circle3Index);
-			circles[circle3Index].adjacentCircleIndices.insert(circle2Index);
-		}
-		if (circle1Index != -1 && circle3Index != -1)
-		{
-			circles[circle1Index].adjacentCircleIndices.insert(circle3Index);
-			circles[circle3Index].adjacentCircleIndices.insert(circle1Index);
+			if (i != j)
+			{
+				if (isAdjacentTo(circles[i], circles[j]))
+				{
+					circles[i].adjacentCircleIndices.push_back(j);
+				}
+			}
 		}
 	}
+	
+}
+
+bool isAdjacentTo(Circle circle1, Circle circle2)
+{
+	return (circle1.center.x - circle2.center.x) * (circle1.center.x - circle2.center.x) + (circle1.center.y - circle2.center.y) * (circle1.center.y - circle2.center.y) <= (circle1.radius + circle2.radius) * (circle1.radius + circle2.radius);
 }
 
 //Clear adjacent circle indices
