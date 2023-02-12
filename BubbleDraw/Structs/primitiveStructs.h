@@ -1,5 +1,6 @@
 #pragma once
 #include <set>
+#include "../Utils/SDL_Util.h"
 
 struct Circle
 {

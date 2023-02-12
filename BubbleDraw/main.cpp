@@ -6,7 +6,7 @@
 #include "Utils/SDL_Util.h"
 #include "Structs/primitiveStructs.h"
 #include "Utils/drawCircle.h"
-#include "bowyerWatsonAlgorithm.h"
+#include "AbstractAlgorithms/bowyerWatsonAlgorithm.h"
 #undef main
 
 //Screen dimension constants

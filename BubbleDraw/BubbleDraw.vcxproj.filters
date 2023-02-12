@@ -14,25 +14,19 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="drawCircle.cpp">
+    <ClCompile Include="AbstractAlgorithms\bowyerWatsonAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AbstractAlgorithms\bowyerWatsonAlgorithm.cpp">
+    <ClCompile Include="Utils\drawCircle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="primitiveStructs.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="drawCircle.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="AbstractAlgorithms\bowyerWatsonAlgorithm.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="SDL_Util.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
+    <ClInclude Include="Utils\SDL_Util.h" />
+    <ClInclude Include="Utils\drawCircle.h" />
+    <ClInclude Include="Structs\primitiveStructs.h" />
   </ItemGroup>
 </Project>
