@@ -18,8 +18,8 @@ SDL_Event e;
 bool running = true;
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1920;
-const int SCREEN_HEIGHT = 1080;
+extern const int SCREEN_WIDTH = 1920;
+extern const int SCREEN_HEIGHT = 1080;
 
 //Initialize mouse position and radius setting.
 SDL_Point mousePos = { SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
