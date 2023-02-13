@@ -26,9 +26,9 @@ SDL_Point mousePos = { SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
 int radiusSetting = 100;
 
 //Turn on Dalaunay triangulation
-bool triangulation = true;
+bool triangulation = false;
 
-//End of Configuration
+//End of Configurations
 
 
 int main()
@@ -53,36 +53,28 @@ int main()
 		//Set draw color to white
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-		//call event handler
-		EventHandler(e, running, circles, mousePos, radiusSetting);
+		//Call event handler
+		EventHandler(e, running, circles, mousePos, radiusSetting, triangulation);
 		
-		//Update mouse circle
-		circles[0] = { mousePos.x, mousePos.y, radiusSetting };
-
-		//Generate list of circle centers
-		std::vector<SDL_Point> circleCenters;
-		for (size_t i = 0; i < circles.size(); i++)
-		{
-			circleCenters.push_back(circles[i].center);
-		}
-		
-		//Clear circle adjacencies
-		for (size_t i = 0; i < circles.size(); i++)
-		{
-			circles[i].adjacentCircleIndices.clear();
-		}
-		
-		//Generate circle adjacencies
+		//Clear and then regenerate circle adjacencies
+		clearCircleAdjacencies(circles);
 		generateCircleAdjacencies(circles);
 		
 		for (size_t i = 0; i < circles.size(); i++)
 		{
-			std::vector<SDL_Point> circleData = PixelizeCircle(i, circles);
-			SDL_RenderDrawPoints(renderer, circleData.data(), circleData.size());
+			std::vector<SDL_Point> pixelizedCircles = PixelizeCircle(i, circles);
+			SDL_RenderDrawPoints(renderer, pixelizedCircles.data(), pixelizedCircles.size());
 		}
 		
 		if (triangulation && circles.size() > 2)
 		{
+			//Generate list of circle centers for Delaunay triangulation
+			std::vector<SDL_Point> circleCenters;
+			for (size_t i = 0; i < circles.size(); i++)
+			{
+				circleCenters.push_back(circles[i].center);
+			}
+
 			//Generate Delaunay Triangulation
 			std::vector<Triangle> delaunayTriangles = BowyerWatsonAlgorithm(circleCenters);
 

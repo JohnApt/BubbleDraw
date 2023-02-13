@@ -2,7 +2,7 @@
 #include <vector>
 #include "EventHandler.h"
 
-void EventHandler(SDL_Event& e, bool& running, std::vector<Circle>& circles, SDL_Point& mousePos, int& radiusSetting)
+void EventHandler(SDL_Event& e, bool& running, std::vector<Circle>& circles, SDL_Point& mousePos, int& radiusSetting, bool& triangulation)
 {
 	while (SDL_PollEvent(&e))
 	{
@@ -21,15 +21,16 @@ void EventHandler(SDL_Event& e, bool& running, std::vector<Circle>& circles, SDL
 				circles.clear();
 				circles.push_back({ {0, 0}, 0 });
 				break;
+			case SDLK_t:
+				triangulation = !triangulation;
+				std::cout << "Triangulation: " << triangulation << std::endl;
+				break;
 			}
-		}
-		else if (e.type == SDL_KEYUP)
-		{
-
 		}
 		else if (e.type == SDL_MOUSEMOTION)
 		{
 			SDL_GetMouseState(&mousePos.x, &mousePos.y);
+			circles[0] = { mousePos.x, mousePos.y, radiusSetting };
 		}
 		else if (e.type == SDL_MOUSEWHEEL)
 		{
@@ -51,10 +52,6 @@ void EventHandler(SDL_Event& e, bool& running, std::vector<Circle>& circles, SDL
 			{
 				circles.push_back({ mousePos.x, mousePos.y, radiusSetting });
 			}
-		}
-		else if (e.type == SDL_MOUSEBUTTONUP)
-		{
-
 		}
 	}
 }
