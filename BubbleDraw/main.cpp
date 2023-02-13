@@ -5,11 +5,11 @@
 #include <algorithm>
 #include "EventHandler.h"
 #include "Utils/SDL_Util.h"
-#include "Structs/primitiveStructs.h"
-#include "Utils/drawCircle.h"
-#include "Utils/drawLines.h"
-#include "AbstractAlgorithms/bowyerWatsonAlgorithm.h"
 #include "Utils/Utils.h"
+#include "Structs/primitiveStructs.h"
+#include "generatePixelVector.h"
+#include "AbstractAlgorithms/bowyerWatsonAlgorithm.h"
+
 #undef main
 
 //Configuration:
@@ -30,7 +30,6 @@ bool triangulation = false;
 
 //End of Configurations
 
-
 int main()
 {
 	SDL_Window* window = nullptr;
@@ -43,6 +42,8 @@ int main()
 	//Initialize circle vector. The 0 index circle is reserved for the mouse circle.
 	std::vector<Circle> circles;
 	circles.push_back({ {0, 0}, 0 });
+
+	std::vector<SDL_Point> pixels;
 
 	while (running)
 	{
@@ -59,13 +60,12 @@ int main()
 		//Clear and then regenerate circle adjacencies
 		clearCircleAdjacencies(circles);
 		generateCircleAdjacencies(circles);
+
+		//Generate and draw pixel vector
+		generatePixelVector(circles, pixels);
+		SDL_RenderDrawPoints(renderer, &pixels[0], pixels.size());
 		
-		for (size_t i = 0; i < circles.size(); i++)
-		{
-			std::vector<SDL_Point> pixelizedCircles = PixelizeCircle(i, circles);
-			SDL_RenderDrawPoints(renderer, pixelizedCircles.data(), pixelizedCircles.size());
-		}
-		
+
 		if (triangulation && circles.size() > 2)
 		{
 			//Generate list of circle centers for Delaunay triangulation

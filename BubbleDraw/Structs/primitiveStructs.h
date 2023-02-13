@@ -11,8 +11,9 @@ struct Circle
 
 	double powerOfPoint(SDL_Point& point)
 	{
-		double distance2 = pow(point.x - center.x, 2) + pow(point.y - center.y, 2);
-		return distance2 - pow(radius, 2);
+		int a = point.x - center.x;
+		int b = point.y - center.y;
+		return a * a + b * b - radius * radius;
 	}
 };
 
@@ -52,7 +53,9 @@ struct Triangle
 		return { (int)x, (int)y };
 	}
 	SDL_Point circumCenter = calculateCircumCenter();
-	double circumRadius = sqrt(pow(circumCenter.x - p1.x, 2) + pow(circumCenter.y - p1.y, 2));
+	double a = circumCenter.x - p1.x;
+	double b = circumCenter.y - p1.y;
+	double circumRadius = sqrt(a * a + b * b);
 };
 
 bool operator==(const Triangle& triangle1, const Triangle& triangle2);

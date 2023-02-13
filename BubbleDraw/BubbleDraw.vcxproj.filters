@@ -35,6 +35,9 @@
     <ClCompile Include="EventHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="generatePixelVector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractAlgorithms\bowyerWatsonAlgorithm.h">
@@ -46,5 +49,6 @@
     <ClInclude Include="Utils\Utils.h" />
     <ClInclude Include="Utils\drawLines.h" />
     <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="generatePixelVector.h" />
   </ItemGroup>
 </Project>

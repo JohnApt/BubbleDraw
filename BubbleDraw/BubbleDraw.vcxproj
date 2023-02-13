@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClCompile Include="AbstractAlgorithms\bowyerWatsonAlgorithm.cpp" />
     <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="generatePixelVector.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Structs\primitiveStructs.cpp" />
     <ClCompile Include="Utils\drawCircle.cpp" />
@@ -145,6 +146,7 @@
   <ItemGroup>
     <ClInclude Include="AbstractAlgorithms\bowyerWatsonAlgorithm.h" />
     <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="generatePixelVector.h" />
     <ClInclude Include="Structs\primitiveStructs.h" />
     <ClInclude Include="Utils\drawCircle.h" />
     <ClInclude Include="Utils\drawLines.h" />
