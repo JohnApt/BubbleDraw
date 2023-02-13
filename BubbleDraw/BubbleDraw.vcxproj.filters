@@ -32,6 +32,9 @@
     <ClCompile Include="Utils\SDL_Util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EventHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractAlgorithms\bowyerWatsonAlgorithm.h">
@@ -42,5 +45,6 @@
     <ClInclude Include="Structs\primitiveStructs.h" />
     <ClInclude Include="Utils\Utils.h" />
     <ClInclude Include="Utils\drawLines.h" />
+    <ClInclude Include="EventHandler.h" />
   </ItemGroup>
 </Project>

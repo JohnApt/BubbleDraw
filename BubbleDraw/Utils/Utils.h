@@ -1,5 +1,5 @@
 #pragma once
-#include "../Structs/primitiveStructs.h"
+#include "Structs/primitiveStructs.h"
 
 int findCircleIndexWithCenter(SDL_Point& center, std::vector<Circle>& circles);
 

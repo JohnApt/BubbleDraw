@@ -1,6 +1,6 @@
 #include "drawLines.h"
-#include "../Utils/Utils.h"
-#include "../Utils/SDL_Util.h"
+#include "Utils/Utils.h"
+#include "Utils/SDL_Util.h"
 
 
 Triangle* findTriangleWithTwoPoints(SDL_Point point1, SDL_Point point2, Triangle& triangle, std::vector<Triangle>& triangles);

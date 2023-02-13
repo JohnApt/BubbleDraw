@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <vector>
 #include <algorithm>
+#include "EventHandler.h"
 #include "Utils/SDL_Util.h"
 #include "Structs/primitiveStructs.h"
 #include "Utils/drawCircle.h"
@@ -11,11 +12,14 @@
 #include "Utils/Utils.h"
 #undef main
 
+//Configuration:
+
+SDL_Event e;
+bool running = true;
+
 //Screen dimension constants
-extern const int SCREEN_WIDTH = 1920;
-extern const int SCREEN_HEIGHT = 1080;
-
-
+const int SCREEN_WIDTH = 1920;
+const int SCREEN_HEIGHT = 1080;
 
 //Initialize mouse position and radius setting.
 SDL_Point mousePos = { SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
@@ -24,10 +28,7 @@ int radiusSetting = 100;
 //Turn on Dalaunay triangulation
 bool triangulation = true;
 
-SDL_Event e;
-bool running = true;
-
-
+//End of Configuration
 
 
 int main()
@@ -51,61 +52,9 @@ int main()
 		
 		//Set draw color to white
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-		
-		//TODO: Refactor into a new file
-		while (SDL_PollEvent(&e))
-		{
-			if (e.type == SDL_QUIT)
-			{
-				running = false;
-			}
-			else if (e.type == SDL_KEYDOWN)
-			{
-				switch (e.key.keysym.sym)
-				{
-				case SDLK_ESCAPE:
-					running = false;
-					break;
-				case SDLK_c:
-					circles.clear();
-					circles.push_back({ {0, 0}, 0 });
-					break;
-				}
-			}
-			else if (e.type == SDL_KEYUP)
-			{
 
-			}
-			else if (e.type == SDL_MOUSEMOTION)
-			{
-				SDL_GetMouseState(&mousePos.x, &mousePos.y);
-			}
-			else if (e.type == SDL_MOUSEWHEEL)
-			{
-				if (e.wheel.y > 0)
-				{
-					radiusSetting += 10;
-					std::cout << "Radius: " << radiusSetting << std::endl;
-				}
-				else if (e.wheel.y < 0)
-				{
-					if (radiusSetting > 10)
-						radiusSetting -= 10;
-					std::cout << "Radius: " << radiusSetting << std::endl;
-				}
-			}
-			else if (e.type == SDL_MOUSEBUTTONDOWN)
-			{
-				if (e.button.button == SDL_BUTTON_LEFT)
-				{
-					circles.push_back({ mousePos.x, mousePos.y, radiusSetting });
-				}
-			}
-			else if (e.type == SDL_MOUSEBUTTONUP)
-			{
-
-			}
-		}
+		//call event handler
+		EventHandler(e, running, circles, mousePos, radiusSetting);
 		
 		//Update mouse circle
 		circles[0] = { mousePos.x, mousePos.y, radiusSetting };

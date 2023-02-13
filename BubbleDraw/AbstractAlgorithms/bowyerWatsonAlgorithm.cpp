@@ -1,9 +1,8 @@
 #include <cmath>
-#include <SDL_video.h>
 #include <vector>
 #include <iostream>
-#include "../Structs/primitiveStructs.h"
-#include "../Utils/SDL_Util.h"
+#include "Structs/primitiveStructs.h"
+#include "Utils/SDL_Util.h"
 
 extern const int SCREEN_WIDTH;
 extern const int SCREEN_HEIGHT;

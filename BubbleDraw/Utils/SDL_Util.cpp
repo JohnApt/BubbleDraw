@@ -1,6 +1,6 @@
-#include "SDL_Util.h"
 #include <cmath>
 #include <SDL.h>
+#include "SDL_Util.h"
 
 double distanceBetweenPoints(SDL_Point point1, SDL_Point point2)
 {

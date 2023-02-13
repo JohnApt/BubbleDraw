@@ -1,8 +1,8 @@
-#include "drawCircle.h"
-#include "../Utils/Utils.h"
 #include <math.h>
 #include <vector>
 #include <stdio.h>
+#include "drawCircle.h"
+#include "Utils/Utils.h"
 
 std::vector<SDL_Point> PixelizeCircle(int indexOfCircle, std::vector<Circle> circles)
 {

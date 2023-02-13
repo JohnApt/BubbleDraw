@@ -1,5 +1,5 @@
 #include "primitiveStructs.h"
-#include "../Utils/SDL_Util.h"
+#include "Utils/SDL_Util.h"
 
 bool operator==(const Line& line1, const Line& line2)
 {
